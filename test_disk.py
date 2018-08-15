@@ -11,7 +11,8 @@ line
 line
 '''})
 def test_save_read():
-    assert save_read() == 'line\nline\nline\n'
+    save = 'save.txt'
+    assert save_read(save) == 'line\nline\nline\n'
 
 
 def test_save_to_character():
