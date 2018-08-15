@@ -48,3 +48,35 @@ def test_load_save_2():
     character = load_save(save)
 
     assert character == None
+
+
+@fake_file({
+    'inventory1.txt': '''header line
+line
+line
+line''',
+    'inventory2.txt': '''header line
+line'''
+})
+def test_inventory_read_1():
+    save = 'save1.txt'
+
+    contents = inventory_read(save)
+
+    assert contents == 'line\nline\nline'
+
+
+@fake_file({
+    'inventory1.txt': '''header line
+line
+line
+line''',
+    'inventory2.txt': '''header line
+line'''
+})
+def test_inventory_read_2():
+    save = 'save2.txt'
+
+    contents = inventory_read(save)
+
+    assert contents == 'line'
