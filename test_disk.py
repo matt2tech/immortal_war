@@ -21,3 +21,30 @@ def test_save_to_character():
     content = save_to_character(contents)
 
     assert content == ('Matt', 'Sir', 2, 2100, 300)
+
+
+@fake_file({'save.txt': '''header line
+Matt,Sir,2,2100,300'''})
+def test_load_save_1():
+    save = 'save.txt'
+
+    character = load_save(save)
+
+    assert character == {
+        'Player': {
+            'Name': 'Matt',
+            'Gender': 'Sir',
+            'Level': 2,
+            'Exp': 2100,
+            'Gold': 300
+        }
+    }
+
+
+@fake_file({'save.txt': '''headerline'''})
+def test_load_save_2():
+    save = 'save.txt'
+
+    character = load_save(save)
+
+    assert character == None
