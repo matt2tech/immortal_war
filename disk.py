@@ -5,13 +5,8 @@ from prompt_toolkit.shortcuts import *
 
 # reads a save from one of the three save slots; each save slot
 # is a separate save.txt file
-def save_read():
-    text = button_dialog(
-        title='Load',
-        text='',
-        buttons=[('Save 1', 'save1.txt'), ('Save 2', 'save2.txt'),
-                 ('Save 3', 'save3.txt')])
-    with open(text, 'r') as file:
+def save_read(save):
+    with open(save, 'r') as file:
         file.readline()
         contents = file.read()
     return contents
@@ -25,8 +20,8 @@ def save_to_character(contents):
 
 # using save_read and save_to_character to create character stats,
 # this will load up a save if there is one
-def load_save():
-    contents = save_read()
+def load_save(save):
+    contents = save_read(save)
     if contents == '':
         return None
     else:
@@ -48,11 +43,22 @@ def load_save():
 
 
 # reads the inventory data saved on inventory.txt
-def inventory_read():
-    with open('inventory.txt', 'r') as file:
-        file.readline()
-        contents = file.read()
-    return contents
+def inventory_read(save):
+    if save == 'save1.txt':
+        with open('inventory1.txt', 'r') as file:
+            file.readline()
+            contents = file.read()
+        return contents
+    elif save == 'save2.txt':
+        with open('inventory2.txt', 'r') as file:
+            file.readline()
+            contents = file.read()
+        return contents
+    if save == 'save3.txt':
+        with open('inventory3.txt', 'r') as file:
+            file.readline()
+            contents = file.read()
+        return contents
 
 
 # converts the inventory data to bag data
@@ -64,8 +70,8 @@ def inventory_to_bag(contents):
 # using inventory_read and inventory_to_bag to create the bag,
 # this will load up inventory associated with a save and creates
 # items for the player's bag from the inventory
-def load_inventory():
-    contents = inventory_read()
+def load_inventory(save):
+    contents = inventory_read(save)
     lines = contents.split('\n')
     for line in lines:
         if line:
@@ -80,11 +86,22 @@ def load_inventory():
     return bag
 
 
-def key_items_read():
-    with open('key_items.txt', 'r') as file:
-        file.readline()
-        contents = file.read()
-    return contents
+def key_items_read(save):
+    if save == 'save1.txt':
+        with open('key_items1.txt', 'r') as file:
+            file.readline()
+            contents = file.read()
+        return contents
+    elif save == 'save2.txt':
+        with open('key_items2.txt', 'r') as file:
+            file.readline()
+            contents = file.read()
+        return contents
+    elif save == 'save3.txt':
+        with open('key_items3.txt', 'r') as file:
+            file.readline()
+            contents = file.read()
+        return contents
 
 
 # make sure to add to key items as game is built
@@ -93,8 +110,8 @@ def items_key(contents):
     return (items[0])
 
 
-def load_key_items():
-    contents = key_items_read()
+def load_key_items(save):
+    contents = key_items_read(save)
     lines = contents.split('\n')
     for line in lines:
         if line:
@@ -132,6 +149,7 @@ def save_to_file(character):
                  ('Save 3', 'save3.txt')])
     with open(text, 'w') as file:
         file.write(save)
+        return text
 
 
 def saving_bag(bag):
@@ -148,10 +166,19 @@ def saving_bag(bag):
     return bag
 
 
-def bag_to_inventory(bag):
-    text = saving_bag(bag)
-    with open('inventory.txt', 'w') as file:
-        file.write(text)
+def bag_to_inventory(bag, save):
+    if save == 'save1.txt':
+        text = saving_bag(bag)
+        with open('inventory1.txt', 'w') as file:
+            file.write(text)
+    elif save == 'save2.txt':
+        text = saving_bag(bag)
+        with open('inventory2.txt', 'w') as file:
+            file.write(text)
+    elif save == 'save3.txt':
+        text = saving_bag(bag)
+        with open('inventory3.txt', 'w') as file:
+            file.write(text)
 
 
 def saving_key_items(key_items):
@@ -164,7 +191,16 @@ def saving_key_items(key_items):
     return key_items
 
 
-def key_items_to_file(key_items):
-    text = saving_key_items(key_items)
-    with open('key_items.txt', 'w') as file:
-        file.write(text)
+def key_items_to_file(key_items, save):
+    if save == 'save1.txt':
+        text = saving_key_items(key_items)
+        with open('key_items1.txt', 'w') as file:
+            file.write(text)
+    elif save == 'save2.txt':
+        text = saving_key_items(key_items)
+        with open('key_items2.txt', 'w') as file:
+            file.write(text)
+    elif save == 'save3.txt':
+        text = saving_key_items(key_items)
+        with open('key_items3.txt', 'w') as file:
+            file.write(text)
