@@ -88,3 +88,41 @@ def test_inventory_to_bag():
     contents = inventory_to_bag(contents)
 
     assert contents == (0, 0, 0, 1)
+
+
+@fake_file({
+    'inventory1.txt': '''header line
+0,0,1,0''',
+    'inventory2.txt': '''header line
+10,0,2,1'''
+})
+def test_load_inventory_1():
+    save = 'save1.txt'
+
+    bag = load_inventory(save)
+
+    assert bag == {
+        'Health Potion': 0,
+        'Mana Potion': 0,
+        'Elixir': 1,
+        'Bomb': 0
+    }
+
+
+@fake_file({
+    'inventory1.txt': '''header line
+0,0,1,0''',
+    'inventory2.txt': '''header line
+10,0,2,1'''
+})
+def test_load_inventory_2():
+    save = 'save2.txt'
+
+    bag = load_inventory(save)
+
+    assert bag == {
+        'Health Potion': 10,
+        'Mana Potion': 0,
+        'Elixir': 2,
+        'Bomb': 1
+    }
