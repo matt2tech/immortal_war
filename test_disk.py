@@ -80,3 +80,11 @@ def test_inventory_read_2():
     contents = inventory_read(save)
 
     assert contents == 'line'
+
+
+def test_inventory_to_bag():
+    contents = '0,0,0,1'
+
+    contents = inventory_to_bag(contents)
+
+    assert contents == (0, 0, 0, 1)
