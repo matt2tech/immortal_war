@@ -9,6 +9,15 @@ import sys
 from os import system, name
 
 
+def loads():
+    text = button_dialog(
+        title='Load',
+        text='',
+        buttons=[('Save 1', 'save1.txt'), ('Save 2', 'save2.txt'),
+                 ('Save 3', 'save3.txt')])
+    return text
+
+
 # just a clear screen function
 def clear():
 
@@ -412,7 +421,7 @@ def spells(player, enemy):
 # runs the program
 def main():
     clear()
-    os.system('setterm -cursor off')
+    system('setterm -cursor off')
     game = start_menu()
     if game == 'New':
         name = naming()
@@ -440,7 +449,7 @@ def main():
         bag = {'Health Potion': 0, 'Mana Potion': 0, 'Elixir': 0, 'Bomb': 0}
         key_items = {'Bandit Leader\'s Dagger': False}
         clear()
-        os.system('setterm -cursor off')
+        system('setterm -cursor off')
         print('\nLoading...\n{} {}\tLevel: {} - Gold: {}\n'.format(
             character['Player']['Gender'], character['Player']['Name'],
             character['Player']['Level'], character['Player']['Gold']))
@@ -523,14 +532,15 @@ health reaches zero. Good luck.''')
         scripted_battle(player, enemy, character, bag)
         character = player_reload(character)
     elif game == 'Load':
-        character = load_save()
+        save = loads()
+        character = load_save(save)
         if character == None:
             text = message_dialog(title='Error', text='No Save')
             main()
-        bag = load_inventory()
-        key_items = load_key_items()
+        bag = load_inventory(save)
+        key_items = load_key_items(save)
         clear()
-        os.system('setterm -cursor off')
+        system('setterm -cursor off')
         print('\nLoading...\n{} {}\tLevel: {} - Gold: {}\n'.format(
             character['Player']['Gender'], character['Player']['Name'],
             character['Player']['Level'], character['Player']['Gold']))
@@ -546,9 +556,9 @@ health reaches zero. Good luck.''')
         elif choices == '2':
             print('Going to sleep...')
             sleep(1)
-            save_to_file(character)
-            bag_to_inventory(bag)
-            key_items_to_file(key_items)
+            save = save_to_file(character)
+            bag_to_inventory(bag, save)
+            key_items_to_file(key_items, save)
             print('Saving game...')
             sleep(1)
             play = ''
@@ -583,7 +593,7 @@ health reaches zero. Good luck.''')
                     dungeon = ''
                     while dungeon != '1':
                         clear()
-                        os.system('setterm -cursor off')
+                        system('setterm -cursor off')
                         dungeon = input(
                             '\nYou arrived at the gate\nWhere would you like to explore?\n1 - City\n2 - Forest\n>>> '
                         )
