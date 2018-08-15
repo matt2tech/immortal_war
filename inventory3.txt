@@ -1,0 +1,2 @@
+health potion,mana potion,elixir,bomb
+0,0,0,0
