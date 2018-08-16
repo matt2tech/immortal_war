@@ -16,6 +16,14 @@ def test_next_level_2():
     assert level == 125971
 
 
+def test_next_level_3():
+    character = {'Player': {'Level': 100}}
+
+    level = next_level(character)
+
+    assert level == 0
+
+
 def test_player_stats_1():
     character = {'Player': {'Name': 'John', 'Level': 10}}
 
