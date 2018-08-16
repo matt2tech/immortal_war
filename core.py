@@ -20,21 +20,22 @@ def next_level(character):
 # levels up the player once they reached a certain threshold
 def level_up(character):
     lvl_up = next_level(character)
-    if character['Player']['Level'] != 100:
-        while character['Player']['Exp'] >= lvl_up:
-            character['Player']['Exp'] = character['Player']['Exp'] - lvl_up
-            character['Player']['Level'] += 1
-            lvl_up = next_level(character)
+    while character['Player']['Exp'] >= lvl_up and character['Player']['Level'] != 100:
+        character['Player']['Exp'] = character['Player']['Exp'] - lvl_up
+        character['Player']['Level'] += 1
+        lvl_up = next_level(character)
+        text = message_dialog(
+            title='Level Up',
+            text='You have reached new heights. You\'re level {} now'.format(
+                character['Player']['Level']))
+        if character['Player']['Level'] == 25:
             text = message_dialog(
                 title='Level Up',
-                text='You have reached new heights. You\'re level {} now'.
-                format(character['Player']['Level']))
-            if character['Player']['Level'] == 25:
-                text = message_dialog(
-                    title='Level Up',
-                    text=
-                    'The Hero Soul within you imparts the skill Heal to you\nHeal will recover one-fourth of your health'
-                )
+                text=
+                'The Hero Soul within you imparts the skill Heal to you\nHeal will recover one-fourth of your health'
+            )
+    else:
+        character['Player']['Exp'] = 0
 
 
 # this function will be used to create stats for the player in battle
