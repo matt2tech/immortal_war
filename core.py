@@ -11,26 +11,30 @@ from prompt_toolkit.shortcuts import *
 
 # helps with leveling up system. gives how much exp is needed for the next level
 def next_level(character):
-    return round((4 * ((character['Player']['Level'] + 1)**3)) / 5)
+    if character['Player']['Level'] != 100:
+        return round((4 * ((character['Player']['Level'] + 1)**3)) / 5)
+    else:
+        return 0
 
 
 # levels up the player once they reached a certain threshold
 def level_up(character):
     lvl_up = next_level(character)
-    while character['Player']['Exp'] >= lvl_up:
-        character['Player']['Exp'] = character['Player']['Exp'] - lvl_up
-        character['Player']['Level'] += 1
-        lvl_up = next_level(character)
-        text = message_dialog(
-            title='Level Up',
-            text='You have reached new heights. You\'re level {} now'.format(
-                character['Player']['Level']))
-        if character['Player']['Level'] == 25:
+    if character['Player']['Level'] != 100:
+        while character['Player']['Exp'] >= lvl_up:
+            character['Player']['Exp'] = character['Player']['Exp'] - lvl_up
+            character['Player']['Level'] += 1
+            lvl_up = next_level(character)
             text = message_dialog(
                 title='Level Up',
-                text=
-                'The Hero Soul within you imparts the skill Heal to you\nHeal will recover one-fourth of your health'
-            )
+                text='You have reached new heights. You\'re level {} now'.
+                format(character['Player']['Level']))
+            if character['Player']['Level'] == 25:
+                text = message_dialog(
+                    title='Level Up',
+                    text=
+                    'The Hero Soul within you imparts the skill Heal to you\nHeal will recover one-fourth of your health'
+                )
 
 
 # this function will be used to create stats for the player in battle
