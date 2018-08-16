@@ -28,12 +28,12 @@ def test_next_level_3():
 @mock.patch('core.message_dialog')
 def test_level_up_1(fake_prompt):
     fake_prompt.return_value = None
-    character = {'Player': {'Level': 2, 'Exp': 22}}
+    character = {'Player': {'Level': 2, 'Exp': 21}}
 
     level_up(character)
 
-    assert character['Player']['Level'] == 3
-    assert character['Player']['Exp'] == 0
+    assert character['Player']['Level'] == 2
+    assert character['Player']['Exp'] == 21
 
 
 @mock.patch('core.message_dialog')
@@ -44,11 +44,11 @@ def test_level_up_2(fake_prompt):
     level_up(character)
 
     assert character['Player']['Level'] == 100
-    assert character['Player']['Exp'] == 0
+    assert character['Player']['Exp'] == 824241
 
 
 def test_level_up_3():
-    character = {'Player': {'Level': 100, 'Exp': 49}}
+    character = {'Player': {'Level': 100, 'Exp': 824241}}
 
     level_up(character)
 
@@ -122,6 +122,7 @@ def test_advance_mana_regen_2():
     assert player['Mana'] == 30
 
 
+# @mock.patch()
 def test_prologue_enemy():
     bandit = prologue_enemy()
 
