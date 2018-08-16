@@ -183,8 +183,8 @@ def bag_to_inventory(bag, save):
 
 def saving_key_items(key_items):
     strings = []
-    bandit_sword = int(key_items['Bandit Leader\'s Dagger'])
-    string = '{}'.format(bandit_sword)
+    bandit_dagger = int(key_items['Bandit Leader\'s Dagger'])
+    string = '{}'.format(bandit_dagger)
     strings.append(string)
     strings.sort()
     key_items = '{}\n{}'.format('bandit dagger', '\n'.join(strings))
