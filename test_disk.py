@@ -162,3 +162,71 @@ def test_items_key():
     items_key(contents)
 
     assert contents == ('0')
+
+
+@fake_file({
+    'key_items1.txt': '''header
+1''',
+    'key_items2.txt': '''header
+0'''
+})
+def test_load_keys_items_1():
+    save = 'save1.txt'
+
+    key_items = load_key_items(save)
+
+    assert key_items == {'Bandit Leader\'s Dagger': True}
+
+
+@fake_file({
+    'key_items1.txt': '''header
+1''',
+    'key_items2.txt': '''header
+0'''
+})
+def test_load_keys_items_2():
+    save = 'save2.txt'
+
+    key_items = load_key_items(save)
+
+    assert key_items == {'Bandit Leader\'s Dagger': False}
+
+
+def test_saving_game_1():
+    character = {
+        'Player': {
+            'Name': 'John',
+            'Gender': 'Sir',
+            'Level': 10,
+            'Exp': 143,
+            'Gold': 563
+        }
+    }
+
+    strings = saving_game(character)
+
+    assert strings == 'name,gender,level,experience,gold\nJohn,Sir,10,143,563'
+
+
+def test_saving_game_2():
+    character = {
+        'Player': {
+            'Name': 'Jane',
+            'Gender': 'Madam',
+            'Level': 52,
+            'Exp': 5234,
+            'Gold': 2939
+        }
+    }
+
+    strings = saving_game(character)
+
+    assert strings == 'name,gender,level,experience,gold\nJane,Madam,52,5234,2939'
+
+
+def test_saving_bag():
+    bag = {'Health Potion': 1, 'Mana Potion': 3, 'Elixir': 2, 'Bomb': 5}
+
+    inventory = saving_bag(bag)
+
+    assert inventory == 'health potion,mana potion,elixir,bomb\n1,3,2,5'
