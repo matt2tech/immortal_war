@@ -1,4 +1,5 @@
 from core import *
+from unittest import mock
 
 
 def test_next_level_1():
@@ -22,6 +23,37 @@ def test_next_level_3():
     level = next_level(character)
 
     assert level == 0
+
+
+@mock.patch('core.message_dialog')
+def test_level_up_1(fake_prompt):
+    fake_prompt.return_value = None
+    character = {'Player': {'Level': 2, 'Exp': 22}}
+
+    level_up(character)
+
+    assert character['Player']['Level'] == 3
+    assert character['Player']['Exp'] == 0
+
+
+@mock.patch('core.message_dialog')
+def test_level_up_2(fake_prompt):
+    fake_prompt.return_value = None
+    character = {'Player': {'Level': 99, 'Exp': 1624241}}
+
+    level_up(character)
+
+    assert character['Player']['Level'] == 100
+    assert character['Player']['Exp'] == 0
+
+
+def test_level_up_3():
+    character = {'Player': {'Level': 100, 'Exp': 49}}
+
+    level_up(character)
+
+    assert character['Player']['Level'] == 100
+    assert character['Player']['Exp'] == 0
 
 
 def test_player_stats_1():
