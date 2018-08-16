@@ -238,3 +238,43 @@ def test_saving_bag_2():
     inventory = saving_bag(bag)
 
     assert inventory == 'health potion,mana potion,elixir,bomb\n0,10,4,5'
+
+
+@fake_file({
+    'inventory1.txt':
+    '''health potion,mana potion,elixir,bomb
+0,0,0,0''',
+    'inventory2.txt':
+    '''health potion,mana potion,elixir,bomb
+0,10,4,5'''
+})
+def test_bag_to_inventory_1():
+    bag = {'Health Potion': 1, 'Mana Potion': 3, 'Elixir': 2, 'Bomb': 5}
+
+    save = 'save1.txt'
+
+    bag_to_inventory(bag, save)
+
+    assert open(
+        'inventory1.txt').read() == '''health potion,mana potion,elixir,bomb
+1,3,2,5'''
+
+
+@fake_file({
+    'inventory1.txt':
+    '''health potion,mana potion,elixir,bomb
+0,0,0,0''',
+    'inventory2.txt':
+    '''health potion,mana potion,elixir,bomb
+0,10,4,5'''
+})
+def test_bag_to_inventory_2():
+    bag = {'Health Potion': 2, 'Mana Potion': 0, 'Elixir': 1, 'Bomb': 10}
+
+    save = 'save1.txt'
+
+    bag_to_inventory(bag, save)
+
+    assert open(
+        'inventory1.txt').read() == '''health potion,mana potion,elixir,bomb
+2,0,1,10'''
