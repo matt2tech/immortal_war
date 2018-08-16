@@ -278,3 +278,19 @@ def test_bag_to_inventory_2():
     assert open(
         'inventory1.txt').read() == '''health potion,mana potion,elixir,bomb
 2,0,1,10'''
+
+
+def test_saving_key_items_1():
+    key_items = {'Bandit Leader\'s Dagger': True}
+
+    items = saving_key_items(key_items)
+
+    assert items == 'bandit dagger\n1'
+
+
+def test_saving_key_items_2():
+    key_items = {'Bandit Leader\'s Dagger': False}
+
+    items = saving_key_items(key_items)
+
+    assert items == 'bandit dagger\n0'
