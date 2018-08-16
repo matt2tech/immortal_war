@@ -224,9 +224,17 @@ def test_saving_game_2():
     assert strings == 'name,gender,level,experience,gold\nJane,Madam,52,5234,2939'
 
 
-def test_saving_bag():
+def test_saving_bag_1():
     bag = {'Health Potion': 1, 'Mana Potion': 3, 'Elixir': 2, 'Bomb': 5}
 
     inventory = saving_bag(bag)
 
     assert inventory == 'health potion,mana potion,elixir,bomb\n1,3,2,5'
+
+
+def test_saving_bag_2():
+    bag = {'Health Potion': 0, 'Mana Potion': 10, 'Elixir': 4, 'Bomb': 5}
+
+    inventory = saving_bag(bag)
+
+    assert inventory == 'health potion,mana potion,elixir,bomb\n0,10,4,5'
