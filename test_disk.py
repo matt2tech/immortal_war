@@ -294,3 +294,31 @@ def test_saving_key_items_2():
     items = saving_key_items(key_items)
 
     assert items == 'bandit dagger\n0'
+
+
+@fake_file({
+    'key_items1.txt': 'bandit dagger\n0',
+    'key_items2.txt': 'bandit dagger\n1'
+})
+def test_key_items_to_file_1():
+    save = 'save1.txt'
+
+    key_items = {'Bandit Leader\'s Dagger': True}
+
+    key_items_to_file(key_items, save)
+
+    assert open('key_items1.txt').read() == 'bandit dagger\n1'
+
+
+@fake_file({
+    'key_items1.txt': 'bandit dagger\n0',
+    'key_items2.txt': 'bandit dagger\n1'
+})
+def test_key_items_to_file_2():
+    save = 'save2.txt'
+
+    key_items = {'Bandit Leader\'s Dagger': False}
+
+    key_items_to_file(key_items, save)
+
+    assert open('key_items1.txt').read() == 'bandit dagger\n0'
