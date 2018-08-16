@@ -227,6 +227,36 @@ def test_attack_3(fake_num, fake_prompt):
     assert bandit['Health'] == 0
 
 
+@mock.patch('core.message_dialog')
+@mock.patch('core.randint')
+def test_escape_1(fake_num, fake_prompt):
+    fake_num.return_value = 50
+    fake_prompt.return_value = None
+
+    player = {'Name': 'John', 'Evasion': 39}
+
+    bandit = {'Name': 'Lone Bandit', 'Evasion': 15}
+
+    success = escape(player, bandit)
+
+    assert success == 'Blocked'
+
+
+@mock.patch('core.message_dialog')
+@mock.patch('core.randint')
+def test_escape_1(fake_num, fake_prompt):
+    fake_num.return_value = 25
+    fake_prompt.return_value = None
+
+    player = {'Name': 'John', 'Evasion': 39}
+
+    bandit = {'Name': 'Lone Bandit', 'Evasion': 15}
+
+    success = escape(player, bandit)
+
+    assert success == 'Escaped'
+
+
 def test_prologue_enemy():
     bandit = prologue_enemy()
 
