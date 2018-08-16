@@ -126,3 +126,39 @@ def test_load_inventory_2():
         'Elixir': 2,
         'Bomb': 1
     }
+
+
+@fake_file({
+    'key_items1.txt': '''header
+1,0,0''',
+    'key_items2.txt': '''header
+1,1,0'''
+})
+def test_key_items_read_1():
+    save = 'save1.txt'
+
+    contents = key_items_read(save)
+
+    assert contents == ('1,0,0')
+
+
+@fake_file({
+    'key_items1.txt': '''header
+1,0,0''',
+    'key_items2.txt': '''header
+1,1,0'''
+})
+def test_key_items_read_2():
+    save = 'save2.txt'
+
+    contents = key_items_read(save)
+
+    assert contents == ('1,1,0')
+
+
+def test_items_key():
+    contents = '0'
+
+    items_key(contents)
+
+    assert contents == ('0')
