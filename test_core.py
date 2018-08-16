@@ -122,7 +122,111 @@ def test_advance_mana_regen_2():
     assert player['Mana'] == 30
 
 
-# @mock.patch()
+@mock.patch('core.message_dialog')
+@mock.patch('core.randint')
+def test_attack_1(fake_num, fake_prompt):
+    fake_num.side_effect = [14, 0]
+    fake_prompt.return_value = None
+
+    player = {
+        'Name': 'John',
+        'Level': 52,
+        'Max Health': 280,
+        'Health': 280,
+        'Mana': 114,
+        'Damage_low': 1,
+        'Damage_high': 14,
+        'Evasion': 39
+    }
+
+    bandit = {
+        'Name': 'Lone Bandit',
+        'Level': 1,
+        'Max Health': 15,
+        'Health': 15,
+        'Max Mana': 5,
+        'Mana': 5,
+        'Damage_low': 2,
+        'Damage_high': 5,
+        'Evasion': 15,
+        'Skill': 'Knife Throw'
+    }
+
+    attack(player, bandit)
+
+    assert bandit['Health'] == 15
+
+
+@mock.patch('core.message_dialog')
+@mock.patch('core.randint')
+def test_attack_2(fake_num, fake_prompt):
+    fake_num.side_effect = [14, 25]
+    fake_prompt.return_value = None
+
+    player = {
+        'Name': 'John',
+        'Level': 52,
+        'Max Health': 280,
+        'Health': 280,
+        'Mana': 114,
+        'Damage_low': 1,
+        'Damage_high': 14,
+        'Evasion': 39
+    }
+
+    bandit = {
+        'Name': 'Lone Bandit',
+        'Level': 1,
+        'Max Health': 15,
+        'Health': 15,
+        'Max Mana': 5,
+        'Mana': 5,
+        'Damage_low': 2,
+        'Damage_high': 5,
+        'Evasion': 15,
+        'Skill': 'Knife Throw'
+    }
+
+    attack(player, bandit)
+
+    assert bandit['Health'] == 1
+
+
+@mock.patch('core.message_dialog')
+@mock.patch('core.randint')
+def test_attack_3(fake_num, fake_prompt):
+    fake_num.side_effect = [16, 25]
+    fake_prompt.return_value = None
+
+    player = {
+        'Name': 'John',
+        'Level': 52,
+        'Max Health': 280,
+        'Health': 280,
+        'Mana': 114,
+        'Damage_low': 1,
+        'Damage_high': 14,
+        'Evasion': 39
+    }
+
+    bandit = {
+        'Name': 'Lone Bandit',
+        'Level': 1,
+        'Max Health': 15,
+        'Health': 15,
+        'Max Mana': 5,
+        'Mana': 5,
+        'Damage_low': 2,
+        'Damage_high': 5,
+        'Evasion': 15,
+        'Skill': 'Knife Throw'
+    }
+
+    attack(player, bandit)
+
+    assert bandit['Health'] == 0
+
+
 def test_prologue_enemy():
     bandit = prologue_enemy()
 
