@@ -2,8 +2,8 @@ from time import sleep
 from disk import *
 from core import *
 from random import choice, randint
-# from mob_images import *
-from text_images import *
+from images.mob_images import *
+from images.text_images import *
 from prompt_toolkit.shortcuts import *
 import sys
 from os import system, name
@@ -424,6 +424,7 @@ def main():
     system('setterm -cursor off')
     game = start_menu()
     if game == 'New':
+        
         name = naming()
         gender = gender_class()
         origin = origin_story()
