@@ -3,6 +3,7 @@ from bcca.test import (
     should_print,
     fake_file,
 )
+from unittest import mock
 
 
 @fake_file({'save.txt': '''header line
@@ -222,6 +223,56 @@ def test_saving_game_2():
     strings = saving_game(character)
 
     assert strings == 'name,gender,level,experience,gold\nJane,Madam,52,5234,2939'
+
+
+@mock.patch('disk.button_dialog')
+@fake_file({
+    'save1.txt': '''header''',
+    'save2.txt': '''header\nJohn,Sir,52,5234,2939'''
+})
+def test_save_to_file_1(fake_prompt):
+    fake_prompt.return_value = 'save1.txt'
+
+    character = {
+        'Player': {
+            'Name': 'Jane',
+            'Gender': 'Madam',
+            'Level': 52,
+            'Exp': 5234,
+            'Gold': 2939
+        }
+    }
+
+    save_to_file(character)
+
+    assert save_to_file(character) == 'save1.txt'
+    assert open('save1.txt').read() == '''name,gender,level,experience,gold
+Jane,Madam,52,5234,2939'''
+
+
+@mock.patch('disk.button_dialog')
+@fake_file({
+    'save1.txt': '''header''',
+    'save2.txt': '''header\nJohn,Sir,53,100,239'''
+})
+def test_save_to_file_2(fake_prompt):
+    fake_prompt.return_value = 'save2.txt'
+
+    character = {
+        'Player': {
+            'Name': 'Jane',
+            'Gender': 'Madam',
+            'Level': 52,
+            'Exp': 5234,
+            'Gold': 2939
+        }
+    }
+
+    save_to_file(character)
+
+    assert save_to_file(character) == 'save2.txt'
+    assert open('save2.txt').read() == '''name,gender,level,experience,gold
+Jane,Madam,52,5234,2939'''
 
 
 def test_saving_bag_1():
