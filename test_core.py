@@ -340,6 +340,56 @@ def test_enemy_skill_2(fake_prompt):
     assert enemy['Mana'] == 1
 
 
+@mock.patch('core.message_dialog')
+@mock.patch('core.randint')
+def test_enemy_heal_1(fake_num, fake_prompt):
+    wolf = {
+        'Name': 'Starved Wolf',
+        'Level': 5,
+        'Max Health': 25,
+        'Health': 10,
+        'Max Mana': 7,
+        'Mana': 7,
+        'Damage_low': 2,
+        'Damage_high': 6,
+        'Evasion': 15,
+        'Heal': 'Lick Wounds'
+    }
+
+    fake_num.return_value = wolf['Level'] + 1
+    fake_prompt.return_value = None
+
+    enemy_heal(wolf)
+
+    assert wolf['Health'] == 16
+    assert wolf['Mana'] == 2
+
+
+@mock.patch('core.message_dialog')
+@mock.patch('core.randint')
+def test_enemy_heal_2(fake_num, fake_prompt):
+    wolf = {
+        'Name': 'Starved Wolf',
+        'Level': 5,
+        'Max Health': 25,
+        'Health': 23,
+        'Max Mana': 7,
+        'Mana': 5,
+        'Damage_low': 2,
+        'Damage_high': 6,
+        'Evasion': 15,
+        'Heal': 'Lick Wounds'
+    }
+
+    fake_num.return_value = wolf['Level'] + 1
+    fake_prompt.return_value = None
+
+    enemy_heal(wolf)
+
+    assert wolf['Health'] == 25
+    assert wolf['Mana'] == 0
+
+
 def test_starved_wolf():
     player = {'Level': 6}
 
