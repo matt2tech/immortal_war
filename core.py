@@ -168,6 +168,7 @@ def enemy_ai(player, enemy):
         enemy_attack(player, enemy)
 
 
+# goes hand in hand with enemy_ai. this is the math for enemy skills
 def enemy_skill(player, enemy):
     skill = 4 + enemy['Level']
     text = message_dialog(
@@ -178,6 +179,7 @@ def enemy_skill(player, enemy):
     enemy['Mana'] -= 5
 
 
+# goes hand in hand with enemy_ai. this is the math for enemy healing
 def enemy_heal(enemy):
     heal = randint(enemy['Level'], enemy['Level'] + 5)
     text = message_dialog(
@@ -188,6 +190,7 @@ def enemy_heal(enemy):
     enemy['Mana'] -= 5
 
 
+# goes hand in hand with enemy_ai. this is the math for enemy attacks
 def enemy_attack(player, enemy):
     attack(enemy, player)
     mana = enemy['Max Mana']
