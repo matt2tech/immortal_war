@@ -244,7 +244,7 @@ def test_escape_1(fake_num, fake_prompt):
 
 @mock.patch('core.message_dialog')
 @mock.patch('core.randint')
-def test_escape_1(fake_num, fake_prompt):
+def test_escape_2(fake_num, fake_prompt):
     fake_num.return_value = 25
     fake_prompt.return_value = None
 
