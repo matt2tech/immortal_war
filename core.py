@@ -178,7 +178,7 @@ def enemy_skill(player, enemy):
     enemy['Mana'] -= 5
 
 
-def enemy_heal(player, enemy):
+def enemy_heal(enemy):
     heal = randint(enemy['Level'], enemy['Level'] + 5)
     text = message_dialog(
         title='Battle',
