@@ -161,26 +161,38 @@ def forest_bandit(player):
 def enemy_ai(player, enemy):
     if enemy['Mana'] >= 5:
         if 'Skill' in enemy and player['Health'] > enemy['Health']:
-            skill = 4 + enemy['Level']
-            text = message_dialog(
-                title='Battle',
-                text='{} used {} dealing {} DMG'.format(
-                    enemy['Name'], enemy['Skill'], skill))
-            player['Health'] = max(player['Health'] - skill, 0)
-            enemy['Mana'] -= 5
+            enemy_skill(player, enemy)
         elif 'Heal' in enemy and enemy['Health'] <= enemy['Max Health'] / 2:
-            heal = randint(enemy['Level'], enemy['Level'] + 5)
-            text = message_dialog(
-                title='Battle',
-                text='{} used {} and recovered {} Health'.format(
-                    enemy['Name'], enemy['Heal'], enemy['Level']))
-            enemy['Health'] = min(heal + enemy['Health'], enemy['Max Health'])
-            enemy['Mana'] -= 5
+            enemy_heal(player, enemy)
     else:
-        attack(enemy, player)
-        mana = enemy['Max Mana']
-        enemy['Mana'] = min(mana,
-                            max(enemy['Mana'] + mana // 6, enemy['Mana'] + 1))
+        enemy_attack(player, enemy)
+
+
+def enemy_skill(player, enemy):
+    skill = 4 + enemy['Level']
+    text = message_dialog(
+        title='Battle',
+        text='{} used {} dealing {} DMG'.format(enemy['Name'], enemy['Skill'],
+                                                skill))
+    player['Health'] = max(player['Health'] - skill, 0)
+    enemy['Mana'] -= 5
+
+
+def enemy_heal(player, enemy):
+    heal = randint(enemy['Level'], enemy['Level'] + 5)
+    text = message_dialog(
+        title='Battle',
+        text='{} used {} and recovered {} Health'.format(
+            enemy['Name'], enemy['Heal'], enemy['Level']))
+    enemy['Health'] = min(heal + enemy['Health'], enemy['Max Health'])
+    enemy['Mana'] -= 5
+
+
+def enemy_attack(player, enemy):
+    attack(enemy, player)
+    mana = enemy['Max Mana']
+    enemy['Mana'] = min(mana, max(enemy['Mana'] + mana // 6,
+                                  enemy['Mana'] + 1))
 
 
 # stats for wolf in forest dungeon. this enemy's max lvl should stay at or under lvl 10
