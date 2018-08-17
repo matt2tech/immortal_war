@@ -312,6 +312,9 @@ def test_forest_bandit():
     }
 
 
+# @mock.patch('core.message_dialog')
+
+
 def test_starved_wolf():
     player = {'Level': 6}
 
@@ -348,3 +351,41 @@ def test_bandit_leader():
         'Heal': 'Bandage',
         'Soul Power': 'Greed'
     }
+
+
+@mock.patch('core.message_dialog')
+def test_soul_power_1(fake_prompt):
+    fake_prompt.return_value = None
+
+    player = {'Name': 'John', 'Max Health': 50, 'Health': 45}
+
+    enemy = {
+        'Name': 'Boss',
+        'Max Health': 50,
+        'Health': 40,
+        'Soul Power': 'Greed'
+    }
+
+    soul_power(player, enemy)
+
+    assert player['Health'] == 40
+    assert enemy['Health'] == 45
+
+
+@mock.patch('core.message_dialog')
+def test_soul_power_2(fake_prompt):
+    fake_prompt.return_value = None
+
+    player = {'Name': 'John', 'Max Health': 50, 'Health': 3}
+
+    enemy = {
+        'Name': 'Boss',
+        'Max Health': 50,
+        'Health': 47,
+        'Soul Power': 'Greed'
+    }
+
+    soul_power(player, enemy)
+
+    assert player['Health'] == 0
+    assert enemy['Health'] == 50
