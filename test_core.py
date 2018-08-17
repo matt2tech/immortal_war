@@ -390,6 +390,78 @@ def test_enemy_heal_2(fake_num, fake_prompt):
     assert wolf['Mana'] == 0
 
 
+@mock.patch('core.message_dialog')
+@mock.patch('core.randint')
+def test_enemy_attack_1(fake_num, fake_prompt):
+    fake_num.side_effect = [5, 25]
+    fake_prompt.return_value = None
+
+    player = {
+        'Name': 'John',
+        'Level': 52,
+        'Max Health': 280,
+        'Health': 280,
+        'Mana': 114,
+        'Damage_low': 1,
+        'Damage_high': 14,
+        'Evasion': 20
+    }
+
+    bandit = {
+        'Name': 'Lone Bandit',
+        'Level': 1,
+        'Max Health': 15,
+        'Health': 15,
+        'Max Mana': 5,
+        'Mana': 0,
+        'Damage_low': 2,
+        'Damage_high': 5,
+        'Evasion': 15,
+        'Skill': 'Knife Throw'
+    }
+
+    enemy_attack(player, bandit)
+
+    assert player['Health'] == 275
+    assert bandit['Mana'] == 1
+
+
+@mock.patch('core.message_dialog')
+@mock.patch('core.randint')
+def test_enemy_attack_2(fake_num, fake_prompt):
+    fake_num.side_effect = [5, 0]
+    fake_prompt.return_value = None
+
+    player = {
+        'Name': 'John',
+        'Level': 52,
+        'Max Health': 280,
+        'Health': 280,
+        'Mana': 114,
+        'Damage_low': 1,
+        'Damage_high': 14,
+        'Evasion': 20
+    }
+
+    bandit = {
+        'Name': 'Lone Bandit',
+        'Level': 1,
+        'Max Health': 15,
+        'Health': 15,
+        'Max Mana': 5,
+        'Mana': 5,
+        'Damage_low': 2,
+        'Damage_high': 5,
+        'Evasion': 15,
+        'Skill': 'Knife Throw'
+    }
+
+    enemy_attack(player, bandit)
+
+    assert player['Health'] == 280
+    assert bandit['Mana'] == 5
+
+
 def test_starved_wolf():
     player = {'Level': 6}
 
