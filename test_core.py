@@ -312,7 +312,32 @@ def test_forest_bandit():
     }
 
 
-# @mock.patch('core.message_dialog')
+@mock.patch('core.message_dialog')
+def test_enemy_skill_1(fake_prompt):
+    fake_prompt.return_value = None
+
+    player = {'Health': 25}
+
+    enemy = {'Name': 'Bandit', 'Level': 5, 'Mana': 5, 'Skill': 'Knife Throw'}
+
+    enemy_skill(player, enemy)
+
+    assert player['Health'] == 16
+    assert enemy['Mana'] == 0
+
+
+@mock.patch('core.message_dialog')
+def test_enemy_skill_2(fake_prompt):
+    fake_prompt.return_value = None
+
+    player = {'Health': 5}
+
+    enemy = {'Name': 'Bandit', 'Level': 5, 'Mana': 6, 'Skill': 'Knife Throw'}
+
+    enemy_skill(player, enemy)
+
+    assert player['Health'] == 0
+    assert enemy['Mana'] == 1
 
 
 def test_starved_wolf():
