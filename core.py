@@ -21,7 +21,8 @@ def next_level(character):
 def level_up(character):
     lvl_up = next_level(character)
     if character['Player']['Level'] != 100:
-        while character['Player']['Exp'] >= lvl_up and character['Player']['Level'] != 100:
+        while character['Player']['Exp'] >= lvl_up and character['Player'][
+                'Level'] != 100:
             character['Player']['Exp'] = character['Player']['Exp'] - lvl_up
             character['Player']['Level'] += 1
             lvl_up = next_level(character)
@@ -163,7 +164,7 @@ def enemy_ai(player, enemy):
         if 'Skill' in enemy and player['Health'] > enemy['Health']:
             enemy_skill(player, enemy)
         elif 'Heal' in enemy and enemy['Health'] <= enemy['Max Health'] / 2:
-            enemy_heal(player, enemy)
+            enemy_heal(enemy)
     else:
         enemy_attack(player, enemy)
 
