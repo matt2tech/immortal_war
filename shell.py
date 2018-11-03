@@ -8,7 +8,8 @@ from prompt_toolkit.shortcuts import *
 import sys
 from os import system, name
 
-
+# load menu. pick a save and game will load up the save file associated
+# with that save
 def loads():
     text = button_dialog(
         title='Load',
@@ -417,6 +418,81 @@ def spells(player, enemy):
     elif text == '5':
         return '5'
 
+# text for the prologue.
+def prologue():
+    text = message_dialog(
+        title='Prologue',
+        text="""Today is the day. You have reached the age of
+adulthood and now are ready to go forth into life
+by yourself. You have said your goodbyes to your
+family. You leave your childhood home behind you
+as you journey forth towards the capital.""")
+    text = message_dialog(
+        title='Prologue',
+        text='''Your journey takes several days with no problems.
+However, on the third day, you're walking along
+the road at a steady pace when you notice a
+broken down wagon. As you get closer, a fairly
+husky man struggling to repair the wagon. The
+man looks up and notices you.''')
+    text = message_dialog(
+        title='Prologue',
+        text='''Before the man can say anything, you are
+are ambushed by bandits. The bandits rush
+towards the wagon plundering it while a 
+Lone Bandit with a bloodthirsty look creeps 
+closer to the man. You notice a sword at your
+feet. Arming yourself, you run in between the
+man and the Lone Bandit ready to fight. The
+Lone Bandit laughs and readies his knife.''')
+    text = message_dialog(
+        title='Prologue',
+        text='''As the Lone Bandit charges at you, you
+feel adrenaline pumping throughout your body
+and a surge of energy overflowing through you. You
+feel as if your soul is soaring. Time begins
+to slow down and knowledge is rushing through
+your mind.''')
+    text = message_dialog(
+        title='Prologue',
+        text='''Your soul transforms and becomes the Hero Soul''')
+    text = message_dialog(
+        title='Prologue',
+        text='''The Hero Soul within you imparts the skill Flare to you
+Flare will deal Burn DMG damaging both the enemy's health and max Health''')
+    text = message_dialog(
+        title='Battle',
+        text='''Immortal War is a turn-based RPG. This
+tutorial will go over how to battle.''')
+    text = message_dialog(
+        title='Battle', text='Attack deals basic DMG to the enemy.')
+    text = message_dialog(
+        title='Battle',
+        text='''Spells shows all the spells you've learned
+and gives you option to choose a spell to
+use. Spells are learned by leveling up and
+require mana. Mana is recovered by not using
+spells for a turn. Flare is the only spell
+you have as of right now.''')
+    text = message_dialog(
+        title='Battle',
+        text='''Items will open your bag and lets you use
+an item. Items can be bought in the shop.''')
+    text = message_dialog(
+        title='Battle',
+        text='''Wait replenishes mana more than all other
+actions and ends your current turn.''')
+    text = message_dialog(
+        title='Battle',
+        text='''Run allows you to escape the battle.
+Chances of escaping are based on your
+evasion. You can not escape certain
+battles.''')
+    text = message_dialog(
+        title='Battle',
+        text='''The battle ends when you or the enemy's
+health reaches zero. Good luck.''')
+
 
 # runs the program
 def main():
@@ -424,7 +500,6 @@ def main():
     system('setterm -cursor off')
     game = start_menu()
     if game == 'New':
-        
         name = naming()
         gender = gender_class()
         origin = origin_story()
@@ -447,6 +522,18 @@ def main():
                 'Weapon': None
             }
         }
+        # game_state = {
+            # 'Player': {
+                # 'Name': name,
+                # 'Gender': gender,
+                # 'Level': lvl,
+                # 'Exp': 0,
+                # 'Gold': gold,
+                # 'Weapon': None, 
+                # 'bag':{'Health Potion': 0, 'Mana Potion': 0, 'Elixir': 0, 'Bomb': 0},
+                # 'key_items': {'Bandit Leader\'s Dagger': False}
+            # }
+        # }
         bag = {'Health Potion': 0, 'Mana Potion': 0, 'Elixir': 0, 'Bomb': 0}
         key_items = {'Bandit Leader\'s Dagger': False}
         clear()
@@ -455,78 +542,7 @@ def main():
             character['Player']['Gender'], character['Player']['Name'],
             character['Player']['Level'], character['Player']['Gold']))
         loading()
-        text = message_dialog(
-            title='Prologue',
-            text="""Today is the day. You have reached the age of
-adulthood and now are ready to go forth into life
-by yourself. You have said your goodbyes to your
-family. You leave your childhood home behind you
-as you journey forth towards the capital.""")
-        text = message_dialog(
-            title='Prologue',
-            text='''Your journey takes several days with no problems.
-However, on the third day, you're walking along
-the road at a steady pace when you notice a
-broken down wagon. As you get closer, a fairly
-husky man struggling to repair the wagon. The
-man looks up and notices you.''')
-        text = message_dialog(
-            title='Prologue',
-            text='''Before the man can say anything, you are
-are ambushed by bandits. The bandits rush
-towards the wagon plundering it while a 
-Lone Bandit with a bloodthirsty look creeps 
-closer to the man. You notice a sword at your
-feet. Arming yourself, you run in between the
-man and the Lone Bandit ready to fight. The
-Lone Bandit laughs and readies his knife.''')
-        text = message_dialog(
-            title='Prologue',
-            text='''As the Lone Bandit charges at you, you
-feel adrenaline pumping throughout your body
-and a surge of energy overflowing through you. You
-feel as if your soul is soaring. Time begins
-to slow down and knowledge is rushing through
-your mind.''')
-        text = message_dialog(
-            title='Prologue',
-            text='''Your soul transforms and becomes the Hero Soul''')
-        text = message_dialog(
-            title='Prologue',
-            text='''The Hero Soul within you imparts the skill Flare to you
-Flare will deal Burn DMG damaging both the enemy's health and max Health''')
-        text = message_dialog(
-            title='Battle',
-            text='''Immortal War is a turn-based RPG. This
-tutorial will go over how to battle.''')
-        text = message_dialog(
-            title='Battle', text='Attack deals basic DMG to the enemy.')
-        text = message_dialog(
-            title='Battle',
-            text='''Spells shows all the spells you've learned
-and gives you option to choose a spell to
-use. Spells are learned by leveling up and
-require mana. Mana is recovered by not using
-spells for a turn. Flare is the only spell
-you have as of right now.''')
-        text = message_dialog(
-            title='Battle',
-            text='''Items will open your bag and lets you use
-an item. Items can be bought in the shop.''')
-        text = message_dialog(
-            title='Battle',
-            text='''Wait replenishes mana more than all other
-actions and ends your current turn.''')
-        text = message_dialog(
-            title='Battle',
-            text='''Run allows you to escape the battle.
-Chances of escaping are based on your
-evasion. You can not escape certain
-battles.''')
-        text = message_dialog(
-            title='Battle',
-            text='''The battle ends when you or the enemy's
-health reaches zero. Good luck.''')
+        prologue()
         player = player_stats(character)
         enemy = prologue_enemy()
         # bandit_image()
